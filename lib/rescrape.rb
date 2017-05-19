@@ -1,5 +1,12 @@
-require "rescrape/version"
+require 'axlsx'
+require 'securerandom'
+require 'colorize'
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
 
-module Rescrape
-  # Your code goes here...
-end
+require_relative './rescrape/version'
+require_relative './rescrape/cli'
+require_relative './rescrape/scrape'
+require_relative './rescrape/excel'
+require_relative './rescrape/job'
