@@ -6,10 +6,10 @@ class Rescrape::Excel
     wb.add_worksheet(:name => "Jobs") do |sheet|
       styles = wb.styles.add_style :b => true,
         :border => { :style => :thin, :color => "000000", :edges => [:bottom] }
-      sheet.add_row ["Company", "Job Title", "Location", "Description", "URL"], :style => styles
+      sheet.add_row ["Company", "Job Title", "Location", "Description", "Full Description", "URL"], :style => styles
 
       Rescrape::Job.all.each do |job|
-        sheet.add_row [job.company, job.title, job.location, job.description, job.url]
+        sheet.add_row [job.company, job.title, job.location, job.description, job.full_description, job.url]
       end
     end
     p.serialize self.config_filename

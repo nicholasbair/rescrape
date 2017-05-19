@@ -5,7 +5,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
     @counter = 1
   end
 
-  def run(data)
+  def call(data)
     if @counter == 1
       doc = Nokogiri::HTML(open(prep_url(data)))
     else
@@ -28,6 +28,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       rescue
         details[:url] = ""
       end
+      details[:full_description] = scrape_post(details[:url])
       Rescrape::Job.new(details)
     end
 
@@ -41,7 +42,15 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
     end
 
     @counter += 1
-    run(next_page) if !next_page.nil?
+    call(next_page) if !next_page.nil?
+  end
+
+  def scrape_post(uri)
+    begin
+      Nokogiri::HTML(open(uri)).css(".summary").text
+    rescue
+      nil
+    end
   end
 
   def prep_url(data)
