@@ -1,4 +1,4 @@
-ReScrapeclass ReScrape::Excel
+class Rescrape::Excel
   def self.write
     p = Axlsx::Package.new
     wb = p.workbook
@@ -8,7 +8,7 @@ ReScrapeclass ReScrape::Excel
         :border => { :style => :thin, :color => "000000", :edges => [:bottom] }
       sheet.add_row ["Company", "Job Title", "Location", "Description", "URL"], :style => styles
 
-      ReScrape::Job.all.each do |job|
+      Rescrape::Job.all.each do |job|
         sheet.add_row [job.company, job.title, job.location, job.description, job.url]
       end
     end

@@ -1,4 +1,4 @@
-class ReScrape::Scrape
+class Rescrape::Scrape
   attr_accessor :counter
 
   def initialize
@@ -28,7 +28,7 @@ class ReScrape::Scrape
       rescue
         details[:url] = ""
       end
-      ReScrape::Job.new(details)
+      Rescrape::Job.new(details)
     end
 
     pages = doc.css(".pagination").css("a")

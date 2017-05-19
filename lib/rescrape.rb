@@ -6,7 +6,7 @@ require 'open-uri'
 require 'pry'
 
 require_relative './rescrape/version'
-require_relative './rescrape/cli'
+require_relative './rescrape/controller'
 require_relative './rescrape/scrape'
 require_relative './rescrape/excel'
 require_relative './rescrape/job'

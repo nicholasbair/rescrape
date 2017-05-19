@@ -2,4 +2,4 @@
 
 require_relative '../lib/rescrape'
 
-ReScrape::Controller.new.call
+Rescrape::Controller.new.call

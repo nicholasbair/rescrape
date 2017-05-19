@@ -1,4 +1,4 @@
-class ReScrape::CLI
+class Rescrape::Controller
   SEARCHES = [
     {:city => "atlanta", :state => "ga", :keywords => ["javascript"]},
     {:city => "atlanta", :state => "ga", :keywords => ["ruby"]},
@@ -26,8 +26,7 @@ class ReScrape::CLI
   ]
 
   def call
-    ReScrape::Graphic.display
-    puts "Welcome to Scrape Indeed".colorize(:light_cyan)
+    puts "Welcome to ReScrape".colorize(:light_cyan)
     start_menu
   end
 
@@ -46,10 +45,10 @@ class ReScrape::CLI
     puts "Scraping...this might take a while."
 
     SEARCHES.each do |s|
-      ReScrape::Scrape.new.run(s)
+      Rescrape::Scrape.new.run(s)
     end
 
-    ReScrape::Excel.write
+    Rescrape::Excel.write
     puts "Writing #{ReScrape::Job.all.length} results to file"
     puts "Done => #{ReScrape::Excel.config_filename}"
   end

@@ -1,4 +1,4 @@
-class ReScrape::Job
+class Rescrape::Job
   attr_accessor :company, :title, :location, :description, :url
   @@all = []
 
