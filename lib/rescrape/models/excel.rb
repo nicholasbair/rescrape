@@ -16,6 +16,6 @@ class Rescrape::Excel
   end
 
   def self.config_filename
-    "#{Dir.home()}/documents/scrape_data/scraped-indeed-#{SecureRandom.uuid}.xlsx"
+    "#{Dir.home()}/documents/scrape_data/scrape-#{SecureRandom.uuid}.xlsx"
   end
 end

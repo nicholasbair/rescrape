@@ -45,7 +45,7 @@ class Rescrape::Controller
     puts "Scraping...this might take a while."
 
     SEARCHES.each do |s|
-      Rescrape::Scrape.new.run(s)
+      Rescrape::ScrapeIndeed.new.run(s)
     end
 
     Rescrape::Excel.write

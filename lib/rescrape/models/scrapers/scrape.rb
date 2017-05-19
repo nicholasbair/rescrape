@@ -1,0 +1,3 @@
+class Rescrape::Scrape
+
+end

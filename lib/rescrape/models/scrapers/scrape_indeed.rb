@@ -1,4 +1,4 @@
-class Rescrape::Scrape
+class Rescrape::ScrapeIndeed < Rescrape::Scrape
   attr_accessor :counter
 
   def initialize
