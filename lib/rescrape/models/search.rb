@@ -1,5 +1,5 @@
 class Rescrape::Search
-  attr_accessor :job_site, :location, :keywords
+  attr_accessor :location, :keywords
 
   @@all = []
 

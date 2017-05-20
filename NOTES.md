@@ -1,7 +1,6 @@
 Objectives:
 - Scraper should drill into each job and grab details in case post is removed
 - Add other sites to scrape
-  - LinkedIn
 - Clean up menu UI
   - Look at CLI gems: GLI, Main, Commander, executable, Methadone, sysexits, highline, trollop**
   - MVC

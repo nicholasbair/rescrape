@@ -47,7 +47,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
 
   def scrape_post(uri)
     begin
-      Nokogiri::HTML(open(uri)).css(".summary").text
+      Nokogiri::HTML(open(uri)).css(".summary").text.strip
     rescue
       nil
     end

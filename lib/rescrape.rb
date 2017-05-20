@@ -4,6 +4,7 @@ require 'colorize'
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require 'dotenv/load'
 
 require_relative './rescrape/version'
 require_relative './rescrape/controllers/controller'

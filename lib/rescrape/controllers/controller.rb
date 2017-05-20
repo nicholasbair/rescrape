@@ -26,7 +26,7 @@ class Rescrape::Controller
   ]
 
   def call
-    puts "Welcome to ReScrape".colorize(:light_cyan)
+    puts "Welcome to Rescrape".colorize(:light_cyan)
     start_menu
   end
 
@@ -49,7 +49,7 @@ class Rescrape::Controller
     end
 
     Rescrape::Excel.write
-    puts "Writing #{ReScrape::Job.all.length} results to file"
-    puts "Done => #{ReScrape::Excel.config_filename}"
+    puts "Writing #{Rescrape::Job.all.length} results to file"
+    puts "Done => #{Rescrape::Excel.config_filename}"
   end
 end
