@@ -1,3 +1,2 @@
 class Rescrape::Scrape
-
 end
