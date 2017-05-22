@@ -23,3 +23,11 @@ Other Random and Crazy Ideas:
 - Reports
   - X % of jobs include the keyword ruby, etc.
   - Trends etc.
+
+UML
+Companies have many jobs
+Jobs belong to companies
+
+Job Sites have many searches
+Job sites have many jobs through searches
+Searches belong to job sites

@@ -1,5 +1,4 @@
-class Rescrape::Search < ActiveRecord::Base
-  belong_to :job_site
+class Rescrape::Company < ActiveRecord::Base
   has_many :jobs
   # attr_accessor :location, :keywords
   #

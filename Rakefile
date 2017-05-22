@@ -1,7 +1,8 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
-
 require 'active_record'
+
+include ActiveRecord::Tasks
 
 task :environment do
   ENV["ACTIVE_RECORD_ENV"] ||= "development"
@@ -9,20 +10,17 @@ task :environment do
   require_relative './lib/rescrape'
 end
 
-include ActiveRecord::Tasks
 DatabaseTasks.db_dir = '../db'
 DatabaseTasks.migrations_paths = '../db/migrate'
-# seed_loader = Class.new do
-#   def load_seed
-#     load "#{ActiveRecord::Tasks::DatabaseTasks.db_dir}/seeds.rb"
-#   end
-# end
-# DatabaseTasks.seed_loader = seed_loader.new
-# load 'active_record/railties/databases.rake'
-#
-# task :console => :environment do
-#   Pry.start
-# end
+
+seed_loader = Class.new do
+  def load_seed
+    load "#{ActiveRecord::Tasks::DatabaseTasks.db_dir}/seeds.rb"
+  end
+end
+DatabaseTasks.seed_loader = seed_loader.new
+
+load 'active_record/railties/databases.rake'
 
 task :console => :environment do
   Pry.start
