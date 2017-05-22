@@ -95,8 +95,10 @@ class Rescrape::Controller
       start_menu
     when "back"
       start_menu
-    # when #
-    # Run specific scrape
+    when -> (i) { i.to_i > 0 }
+      all_searches = Rescrape::Search.all
+      Rescrape::ScrapeIndeed.new.call(all_searches[input_to_index(input.to_i)])
+      start_menu
     else
       start_menu
     end
