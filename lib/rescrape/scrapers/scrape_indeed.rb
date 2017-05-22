@@ -46,7 +46,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
 
   def prep_url(data)
     base_url = "https://www.indeed.com/jobs?q="
-    keywords = data[:keywords].join("+")
+    keywords = data[:keywords].split(/,\s*| /).join("+")
     location = "&l="
     city = data[:city]
     split = "%2C+"

@@ -1,41 +1,69 @@
 class Rescrape::Controller
-  SEARCHES = [
-    # {:city => "atlanta", :state => "ga", :keywords => ["javascript"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["ruby"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["javascript, ruby, rails, react, node"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["business", "analyst", "javascript", "ruby"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["project", "manager", "javascript", "ruby"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["project", "coordinator", "javascript", "ruby"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["javascript", "react"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["node"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["junior", "developer"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["internship", "javascript", "ruby"]},
-    # {:city => "atlanta", :state => "ga", :keywords => ["apprenticeship", "javascript", "ruby"]},
-    #
-    # {:city => "Duluth", :state => "ga", :keywords => ["javascript"]},
-    {:city => "Duluth", :state => "ga", :keywords => ["ruby"]}#,
-    # {:city => "Duluth", :state => "ga", :keywords => ["javascript, ruby, rails, react, node"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["business", "analyst", "javascript", "ruby"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["project", "manager", "javascript", "ruby"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["project", "coordinator", "javascript", "ruby"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["javascript", "react"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["node"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["junior", "developer"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["internship", "javascript", "ruby"]},
-    # {:city => "Duluth", :state => "ga", :keywords => ["apprenticeship", "javascript", "ruby"]}
-  ]
-
   def call
     puts "Welcome to Rescrape".colorize(:light_cyan)
     start_menu
   end
 
   def start_menu
-    puts "Type 'scrape' to get started"
-    input = gets.strip.downcase
+    puts <<-MENU.gsub /^\s+/, ""
+      Main menu:
+      1 - View current searches
+      2 - Add a new search
+      3 - Delete a search
+    MENU
 
-    if input == "scrape"
-      start
+    input = gets.strip.to_i
+
+    case input
+    when 1
+      puts <<-SEARCH_MENU.gsub /^\s+/, ""
+        Search Menu:
+        All - Run all searches
+        Back - Back to main menu
+        # - Line number to run specific search
+        ======================================
+      SEARCH_MENU
+      print_all_searches
+      # Allow user to scrape one
+      # Allow user to scrape all
+      search_input = gets.strip
+      search(search_input)
+    when 2
+      # Allow user to create new search
+    when 3
+      puts <<-DELETE_MENU.gsub /^\s+/, ""
+      # - Line number to delete a search
+      ======================================
+      DELETE_MENU
+      print_all_searches
+      search_input = gets.strip
+      Rescrape::Search.find(search_input).destroy
+      puts "Successfully deleted search."
+      start_menu
+    else
+      start_menu
+    end
+  end
+
+  def print_all_searches
+    Rescrape::Search.all.each.with_index(1) do |s, i|
+      puts "#{i}. #{s.job_site.name}: Find #{s.keywords} jobs in #{s.city}, #{s.state}"
+    end
+  end
+
+  def input_to_index(n)
+    n.to_i - 1
+  end
+
+  def search(input)
+    case input
+    when "all"
+      # Iterate over searches and scrape
+
+    when "back"
+      start_menu
+    # when #
+    # Run specific scrape
     else
       start_menu
     end
