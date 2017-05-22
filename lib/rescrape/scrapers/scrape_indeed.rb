@@ -31,7 +31,6 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       rescue
         details[:url] = ""
       end
-      # Rescrape::Job.new(details).save
       Rescrape::Job.find_or_create_by(details)
     end
 

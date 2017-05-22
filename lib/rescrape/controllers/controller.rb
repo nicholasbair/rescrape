@@ -10,40 +10,53 @@ class Rescrape::Controller
       1 - View current searches
       2 - Add a new search
       3 - Delete a search
+      4 - Write all data to excel
     MENU
 
     input = gets.strip.to_i
 
     case input
     when 1
-      puts <<-SEARCH_MENU.gsub /^\s+/, ""
-        Search Menu:
-        All - Run all searches
-        Back - Back to main menu
-        # - Line number to run specific search
-        ======================================
-      SEARCH_MENU
-      print_all_searches
-      # Allow user to scrape one
-      # Allow user to scrape all
-      search_input = gets.strip
-      search(search_input)
+      view_current_searches
     when 2
-      create_search
-      start_menu
+      add_new_search
     when 3
-      puts <<-DELETE_MENU.gsub /^\s+/, ""
-      # - Line number to delete a search
-      ======================================
-      DELETE_MENU
-      print_all_searches
-      search_input = gets.strip
-      Rescrape::Search.find(search_input).destroy
-      puts "Successfully deleted search."
-      start_menu
+      delete_search
+    when 4
+      write_excel
     else
       start_menu
     end
+  end
+
+  def view_current_searches
+    puts <<-SEARCH_MENU.gsub /^\s+/, ""
+      Search Menu:
+      All - Run all searches
+      Back - Back to main menu
+      # - Line number to run specific search
+      ======================================
+    SEARCH_MENU
+    print_all_searches
+    search_input = gets.strip
+    search(search_input)
+  end
+
+  def add_new_search
+    create_search
+    start_menu
+  end
+
+  def delete_search
+    puts <<-DELETE_MENU.gsub /^\s+/, ""
+    # - Line number to delete a search
+    ======================================
+    DELETE_MENU
+    print_all_searches
+    search_input = gets.strip
+    Rescrape::Search.find(search_input).destroy
+    puts "Successfully deleted search."
+    start_menu
   end
 
   def create_search
@@ -84,12 +97,18 @@ class Rescrape::Controller
     n.to_i - 1
   end
 
+  def find_scraper(search)
+    case search.job_site.name
+    when "Indeed"
+      Rescrape::ScrapeIndeed.new.call(search)
+    end
+  end
+
   def search(input)
     case input
     when "all"
       Rescrape::Search.all.each.with_index(1) do |s, i|
-        # send("Rescrape::Scrape#{s.job_site.name}.new.call(s)")
-        Rescrape::ScrapeIndeed.new.call(s)
+        find_scraper(s)
         puts "Search ##{i} completed."
       end
       start_menu
@@ -97,22 +116,17 @@ class Rescrape::Controller
       start_menu
     when -> (i) { i.to_i > 0 }
       all_searches = Rescrape::Search.all
-      Rescrape::ScrapeIndeed.new.call(all_searches[input_to_index(input.to_i)])
+      find_scraper(all_searches[input_to_index(input.to_i)])
       start_menu
     else
       start_menu
     end
   end
 
-  # def start
-  #   puts "Scraping...this might take a while."
-  #
-  #   SEARCHES.each do |s|
-  #     Rescrape::ScrapeIndeed.new.call(s)
-  #   end
-  #
-  #   Rescrape::Excel.write
-  #   puts "Writing #{Rescrape::Job.all.length} results to file"
-  #   puts "Done => #{Rescrape::Excel.config_filename}"
-  # end
+  def write_excel
+    Rescrape::Excel.write
+    puts "Writing #{Rescrape::Job.all.length} results to file"
+    puts "Done => #{Rescrape::Excel.config_filename}"
+    start_menu
+  end
 end
