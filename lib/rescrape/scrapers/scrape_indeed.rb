@@ -16,10 +16,13 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
 
     jobs.each do |job|
       details = {}
-      details[:company] = job.css(".company").text.strip
+      details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip)
       details[:title] = job.css(".jobtitle").text.strip
       details[:description] = job.css(".summary").text.strip
-      details[:location] = job.css(".location").text.strip
+
+      location = job.css(".location").text.strip.split(", ")
+      details[:city] = location[0]
+      details[:state] = location[1]
 
       begin
         title_div = job.css(".jobtitle").css("a")
@@ -28,7 +31,8 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       rescue
         details[:url] = ""
       end
-      Rescrape::Job.new(details)
+      # Rescrape::Job.new(details).save
+      Rescrape::Job.find_or_create_by(details)
     end
 
     pages = doc.css(".pagination").css("a")
