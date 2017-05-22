@@ -15,8 +15,12 @@ require 'active_record'
 require_relative './rescrape/version'
 require_relative './rescrape/controllers/controller'
 require_relative './rescrape/excel'
+
 require_relative './rescrape/models/job'
 require_relative './rescrape/models/search'
+require_relative './rescrape/models/company'
+require_relative './rescrape/models/job_site'
+
 require_relative './rescrape/scrapers/scrape'
 require_relative './rescrape/scrapers/scrape_indeed'
 require_relative './rescrape/scrapers/scrape_dice'

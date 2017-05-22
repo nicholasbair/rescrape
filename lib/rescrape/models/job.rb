@@ -1,6 +1,6 @@
 class Rescrape::Job < ActiveRecord::Base
-  belong_to :company
-  belong_to :search
+  belongs_to :company
+  belongs_to :search
   # attr_accessor :company, :title, :location, :description, :url, :full_description
   # @@all = []
   #
