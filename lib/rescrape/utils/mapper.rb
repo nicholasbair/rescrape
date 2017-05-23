@@ -5,22 +5,11 @@ class Rescrape::Mapper
 
   @@base_uri = "https://maps.googleapis.com/maps/api/directions/json?"
 
-  # parsed_response => routes => legs => distance, duration, duration_in_traffic => text
-
-  # "legs"=>
-  #      [{"distance"=>{"text"=>"51.2 mi", "value"=>82391},
-  #        "duration"=>{"text"=>"1 hour 0 mins", "value"=>3628},
-  #        "duration_in_traffic"=>{"text"=>"58 mins", "value"=>3492},
-  #        "end_address"=>"Athens, GA, USA",
-
-
   def initialize(dest_city, dest_state)
     @dest_city = dest_city
     @dest_state = dest_state
-    # @origin_city = Rescape::Home.first.city
-    @origin_city = "Loganville"
-    # @origin_state = Rescape::Home.first.state
-    @origin_state = "GA"
+    @origin_city = Rescape::User.first.city
+    @origin_state = Rescape::User.first.state
   end
 
   def get_distance
