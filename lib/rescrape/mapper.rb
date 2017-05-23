@@ -18,7 +18,7 @@ class Rescrape::Mapper
     @dest_city = dest_city
     @dest_state = dest_state
     # @origin_city = Rescape::Home.first.city
-    @origin_city = "Duluth"
+    @origin_city = "Loganville"
     # @origin_state = Rescape::Home.first.state
     @origin_state = "GA"
   end
