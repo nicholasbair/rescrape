@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 11) do
+ActiveRecord::Schema.define(version: 12) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "city"
     t.string "state"
+    t.float "lat"
+    t.float "lng"
   end
 
   create_table "job_sites", force: :cascade do |t|

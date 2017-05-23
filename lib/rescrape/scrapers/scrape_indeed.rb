@@ -25,8 +25,15 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip, city: location[0], state: location[1])
 
       begin
-        map = Rescrape::Mapper.new(location[0], location[1]).get_distance
-        map_data = map.parsed_response["routes"][0]["legs"][0]
+        data = Rescrape::Placer.new({name: details[:company].name, city: location[0], state: location[1]}).find_place
+        details[:company].lat = data["lat"]
+        details[:company].lng = data["lng"]
+      rescue
+        nil
+      end
+
+      begin
+        map_data = Rescrape::Mapper.new(details[:company].lat, details[:company].lng).get_distance
 
         details[:distance] = map_data["distance"]["text"].to_f
         details[:duration] = map_data["duration"]["text"]
