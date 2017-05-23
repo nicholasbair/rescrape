@@ -24,6 +24,13 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       details[:state] = location[1]
       details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip, city: location[0], state: location[1])
 
+      map = Rescrape::Mapper.new(location[0], location[1]).get_distance
+      map_data = map.parsed_response["routes"][0]["legs"][0]
+
+      details[:distance] = map_data["distance"]["text"].to_f
+      details[:duration] = map_data["duration"]["text"]
+      details[:duration_in_traffic] = map_data["duration_in_traffic"]["text"]
+
       begin
         title_div = job.css(".jobtitle").css("a")
         url = title_div[0]["href"]
@@ -31,6 +38,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       rescue
         details[:url] = ""
       end
+      binding.pry
       Rescrape::Job.find_or_create_by(details)
     end
 

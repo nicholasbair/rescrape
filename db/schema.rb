@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 9) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
+    t.string "city"
+    t.string "state"
+  end
+
+  create_table "homes", force: :cascade do |t|
     t.string "city"
     t.string "state"
   end
@@ -31,6 +36,9 @@ ActiveRecord::Schema.define(version: 6) do
     t.string "url"
     t.integer "company_id"
     t.integer "search_id"
+    t.float "distance"
+    t.string "duration"
+    t.string "duration_in_traffic"
   end
 
   create_table "searches", force: :cascade do |t|
