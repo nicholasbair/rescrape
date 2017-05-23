@@ -8,30 +8,10 @@ require 'dotenv/load'
 require 'sqlite3'
 require 'active_record'
 require 'httparty'
+require 'require_all'
 
-# TODO:
-# Dir[File.join(File.dirname(__FILE__), "./rescrape", "*.rb")].each {|f| require f}
-# Dir[File.join(File.dirname(__FILE__), "./support", "*.rb")].each {|f| require f}
-
-require_relative './rescrape/version'
-require_relative './rescrape/controllers/controller'
-require_relative './rescrape/excel'
-require_relative './rescrape/mapper'
-
-require_relative './rescrape/models/job'
-require_relative './rescrape/models/search'
-require_relative './rescrape/models/company'
-require_relative './rescrape/models/job_site'
-require_relative './rescrape/models/user'
-
-require_relative './rescrape/scrapers/scrape'
-require_relative './rescrape/scrapers/scrape_indeed'
-require_relative './rescrape/scrapers/scrape_dice'
-require_relative './rescrape/scrapers/scrape_career_builder'
-require_relative './rescrape/scrapers/scrape_cyber_coders'
-
-require_relative './support/connection_adapter'
-require_relative './support/db_registry'
+require_rel 'rescrape'
+require_rel 'support'
 
 # DBNAME = "rescrape"
 

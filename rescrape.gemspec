@@ -41,4 +41,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sqlite3", "~> 1.3"
   spec.add_dependency "activerecord", "~> 5.1.1"
   spec.add_dependency "httparty", "~> 0.15.5"
+  spec.add_dependency "require_all", "~> 1.4.0"
 end
