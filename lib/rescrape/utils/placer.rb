@@ -14,12 +14,17 @@ class Rescrape::Placer
   # Return hash of lat/lng
   def geocode
     result = self.class.get("#{@@base_uri}#{@@geocode_stub}address=#{@city},+#{@state}&key=#{ENV['GEOCODE_GOOGLE_MAPS_API_KEY']}")
-    result.parsed_response["results"][0]["geometry"]["location"]
+    parse_results(result)
   end
 
   # Return hash of lat/lng
   def find_place
     result = self.class.get("#{@@base_uri}#{@@places_stub}query=#{@name}+#{@city}+#{@state}&key=#{ENV['PLACES_GOOGLE_MAPS_API_KEY']}")
-    result.parsed_response["results"][0]["geometry"]["location"]
+    parse_results(result)
+  end
+
+  private
+  def parse_results(results)
+    results.parsed_response["results"][0]["geometry"]["location"]
   end
 end

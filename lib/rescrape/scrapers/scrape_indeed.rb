@@ -15,6 +15,9 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
     jobs = doc.css("#resultsCol").css(".row")
 
     jobs.each do |job|
+      # TODO:
+      # Check if job exists first!
+
       details = {}
       details[:title] = job.css(".jobtitle").text.strip
       details[:description] = job.css(".summary").text.strip
@@ -24,6 +27,8 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       details[:state] = location[1]
       details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip, city: location[0], state: location[1])
 
+      # TODO:
+      # Only make API call if company doesn't already have lat/lng
       begin
         data = Rescrape::Placer.new({name: details[:company].name, city: location[0], state: location[1]}).find_place
         details[:company].lat = data["lat"]
@@ -32,9 +37,12 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
         nil
       end
 
+      # TODO:
+      # Only make API call if company has lat/lng
       begin
         map_data = Rescrape::Mapper.new(details[:company].lat, details[:company].lng).get_distance
 
+        # TODO: return value of get_distance should handle this
         details[:distance] = map_data["distance"]["text"].to_f
         details[:duration] = map_data["duration"]["text"]
         details[:duration_in_traffic] = map_data["duration_in_traffic"]["text"]
@@ -49,7 +57,6 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       rescue
         details[:url] = ""
       end
-      # binding.pry
       Rescrape::Job.find_or_create_by(details)
     end
 
@@ -66,6 +73,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
     call(next_page) if !next_page.nil?
   end
 
+  private
   def prep_url(data)
     base_url = "https://www.indeed.com/jobs?q="
     keywords = data[:keywords].split(/,\s*| /).join("+")

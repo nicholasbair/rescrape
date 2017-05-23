@@ -18,7 +18,6 @@ class Rescrape::Mapper
   end
 
   private
-  # Pass in lat/lng for origin/dest if possible
   def build_uri
     "#{@@base_uri}origin=#{@origin_lat},#{@origin_lng}&destination=#{dest_lat},+#{dest_lng}&departure_time=now&traffic_model=pessimistic&key=#{ENV['GOOGLE_MAPS_API_KEY']}"
   end

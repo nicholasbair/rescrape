@@ -5,6 +5,8 @@ class Rescrape::Controller
     start_menu
   end
 
+  private
+  # TODO: refactor w/ update_home
   def set_home
     user = Rescrape::User.new
     puts "We will use your home city/state to calculate commute times"
@@ -13,11 +15,23 @@ class Rescrape::Controller
     puts "Please enter your home state"
     user.state = gets.strip
 
+    # TODO:
+    # Only make API call if !city/state.nil?
     coordinates = Rescrape::Placer.new({city: user.city, state: user.state}).geocode
     user.lat = coordinates["lat"]
     user.lng = coordinates["lng"]
 
     user.save
+  end
+
+  def update_home
+    user = Rescrape::User.first
+    puts "Please enter your home city"
+    user.city = gets.strip
+    puts "Please enter your home state"
+    user.state = gets.strip
+    user.save
+    start_menu
   end
 
   def start_menu
@@ -146,16 +160,6 @@ class Rescrape::Controller
     Rescrape::Excel.write
     puts "Writing #{Rescrape::Job.all.length} results to file"
     puts "Done => #{Rescrape::Excel.config_filename}"
-    start_menu
-  end
-
-  def update_home
-    user = Rescrape::User.first
-    puts "Please enter your home city"
-    user.city = gets.strip
-    puts "Please enter your home state"
-    user.state = gets.strip
-    user.save
     start_menu
   end
 end

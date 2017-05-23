@@ -13,10 +13,7 @@ require 'require_all'
 require_rel 'rescrape'
 require_rel 'support'
 
-# DBNAME = "rescrape"
-
-# DBRegistry[ENV["ACTIVE_RECORD_ENV"]].connect!
-DBRegistry["development"].connect!
+DBRegistry[ENV["ACTIVE_RECORD_ENV"]].connect!
 DB = ActiveRecord::Base.connection
 
 if ENV["ACTIVE_RECORD_ENV"] == "test"
