@@ -1,7 +1,18 @@
 class Rescrape::Controller
   def call
     puts "Welcome to Rescrape".colorize(:light_cyan)
+    set_home if Rescrape::User.first.nil?
     start_menu
+  end
+
+  def set_home
+    user = Rescrape::User.new
+    puts "We will use your home city/state to calculate commute times"
+    puts "Please enter your home city"
+    user.city = gets.strip
+    puts "Please enter your home state"
+    user.state = gets.strip
+    user.save
   end
 
   def start_menu
@@ -11,6 +22,7 @@ class Rescrape::Controller
       2 - Add a new search
       3 - Delete a search
       4 - Write all data to excel
+      5 - Update home
     MENU
 
     input = gets.strip.to_i
@@ -24,6 +36,8 @@ class Rescrape::Controller
       delete_search
     when 4
       write_excel
+    when 5
+      update_home
     else
       start_menu
     end
@@ -127,6 +141,16 @@ class Rescrape::Controller
     Rescrape::Excel.write
     puts "Writing #{Rescrape::Job.all.length} results to file"
     puts "Done => #{Rescrape::Excel.config_filename}"
+    start_menu
+  end
+
+  def update_home
+    user = Rescrape::User.first
+    puts "Please enter your home city"
+    user.city = gets.strip
+    puts "Please enter your home state"
+    user.state = gets.strip
+    user.save
     start_menu
   end
 end
