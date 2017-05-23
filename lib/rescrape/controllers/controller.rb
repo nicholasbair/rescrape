@@ -12,6 +12,11 @@ class Rescrape::Controller
     user.city = gets.strip
     puts "Please enter your home state"
     user.state = gets.strip
+
+    coordinates = Rescrape::Placer.new({city: user.city, state: user.state}).geocode
+    user.lat = coordinates["lat"]
+    user.lng = coordinates["lng"]
+
     user.save
   end
 
