@@ -22,7 +22,7 @@ require_relative './rescrape/models/job'
 require_relative './rescrape/models/search'
 require_relative './rescrape/models/company'
 require_relative './rescrape/models/job_site'
-require_relative './rescrape/models/home'
+require_relative './rescrape/models/user'
 
 require_relative './rescrape/scrapers/scrape'
 require_relative './rescrape/scrapers/scrape_indeed'
