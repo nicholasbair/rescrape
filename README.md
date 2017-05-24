@@ -17,14 +17,12 @@ Rescrape is currently not available as a gem, to install:
 2. Clone
 3. CD into project directory
 4. Create .env file in project root with format of [dotenv mock](dotenv_mock.txt)
-4. $ bundle install
-5. $ bundle
+4. $ bundle
 
 
 ## Usage
 
-1. CD into bin
-2. $ ./bin/rescrape
+1. From project directory => $ ./bin/rescrape
 
 
 ## Contributing
