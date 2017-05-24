@@ -3,7 +3,7 @@
 Welcome to Rescrape!  A CLI job scraper with data persistence, write to excel capabilities, and integration to Google Maps for commute data.
 
 
-##Project goals
+## Project goals
 - [x] Refactor [ScrapeIndeed](https://github.com/nicholasbair/scrape_indeed) to include data persistence (SQLite3 + ActiveRecord)
 - [x] Allow user to create and save searches
 - [x] Gather data on a job's distance from home, commute time, and commute time with traffic (Google Maps API - directions & places)
@@ -24,7 +24,7 @@ Rescrape is currently not available as a gem, to install:
 ## Usage
 
 1. CD into bin
-2. './bin/rescrape'
+2. $ ./bin/rescrape
 
 
 ## Contributing
