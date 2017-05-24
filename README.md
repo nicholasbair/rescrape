@@ -18,7 +18,8 @@ Rescrape is currently not available as a gem, to install:
 3. CD into project directory
 4. Create .env file in project root with format of [dotenv mock](dotenv_mock.txt)
 4. $ bundle
-
+5. $ rake db:migrate
+6. $ rake db:seed
 
 ## Usage
 
