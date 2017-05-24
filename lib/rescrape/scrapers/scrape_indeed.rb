@@ -1,4 +1,4 @@
-class Rescrape::ScrapeIndeed < Rescrape::Scrape
+class Rescrape::ScrapeIndeed
   attr_accessor :counter
 
   def initialize
@@ -32,12 +32,13 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
 
         location = job.css(".location").text.strip.split(", ")
         details[:city] = location[0]
-        details[:state] = location[1].split(" ")[0]
+        details[:state] = location[1].split(" ")[0] unless location.size < 2
         details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip, city: location[0], state: location[1])
 
         if !details[:company].lat && !details[:company].lng
           begin
             data = Rescrape::Placer.new({name: details[:company].name, city: location[0], state: location[1]}).find_place
+
             details[:company].lat = data["lat"]
             details[:company].lng = data["lng"]
           rescue
@@ -58,8 +59,12 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
           end
         end
 
-        Rescrape::Job.create(details)
-        @job_counter +=1
+        new_job = Rescrape::Job.new(details)
+
+        if persist?(new_job)
+          new_job.save
+          @job_counter +=1
+        end
       end
     end
 
@@ -81,6 +86,10 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
   end
 
   private
+  def persist?(job)
+    true unless job.attributes.select { |k,v| v == nil }.size > 1
+  end
+
   def prep_url(data)
     base_url = "https://www.indeed.com/jobs?q="
     keywords = data[:keywords].split(/,\s*| /).join("+")
