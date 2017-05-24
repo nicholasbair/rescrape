@@ -71,6 +71,10 @@ class Rescrape::Controller
       ======================================
     SEARCH_MENU
     print_all_searches
+    if Rescrape::Search.all.size == 0
+      puts "Please create a search from main menu"
+      start_menu
+    end
     search_input = gets.strip
     search(search_input)
   end
