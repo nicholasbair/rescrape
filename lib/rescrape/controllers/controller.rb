@@ -31,7 +31,7 @@ class Rescrape::Controller
       1 - View current searches
       2 - Add a new search
       3 - Delete a search
-      4 - Write all data to excel
+      4 - Report builder
       5 - Update home
     MENU
 
@@ -45,7 +45,7 @@ class Rescrape::Controller
     when 3
       delete_search
     when 4
-      write_excel
+      report_menu
     when 5
       config_user
     else
@@ -153,10 +153,38 @@ class Rescrape::Controller
     end
   end
 
+  def report_menu
+    puts <<-MENU.gsub /^\s+/, ""
+      Report menu:
+      1 - All jobs
+      2 - All companies
+      3 - Closest jobs by distance
+      4 - Closest jobs by travel time
+      5 - Closest jobs by travel with traffic
+      6 - Back
+    MENU
+
+    input = gets.strip.to_i
+
+    case input
+    when 1
+      Rescrape::Reporter.new.all_jobs
+    when 2
+      Rescrape::Reporter.new.all_companies
+    when 3
+      Rescrape::Reporter.new.closest_jobs_by_distance
+    when 4
+      Rescrape::Reporter.new.closest_jobs_by_travel_time
+    when 5
+      Rescrape::Reporter.new.closest_jobs_by_travel_with_traffic
+    when 6
+      start_menu
+    end
+    write_excel
+  end
+
   def write_excel
-    Rescrape::Excel.write
-    puts "Writing #{Rescrape::Job.all.length} results to file"
-    puts "Done => #{Rescrape::Excel.config_filename}"
+    puts "Writing results to file"
     start_menu
   end
 end

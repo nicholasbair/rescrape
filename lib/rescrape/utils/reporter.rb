@@ -1,18 +1,24 @@
 class Rescrape::Reporter
-  # IDEA:
-  # Show user top 50 closest jobs by:
-    # Distance
-    # Travel time
-    # Travel w/ traffic
-    # Allow user to open selection in browser
-  # Most common key words
+  # In controller, look at instance methods of Reporter
+  # use that to create menu
 
-  # Reporter aggregates data and passes to Excel
-  # Data == array of ruby objects
-  # Excel will need to be refactored to be more generic
-  # Excel will handle formatting of data
+  def all_jobs
+    Rescrape::Excel.new.write(Rescrape::Job.all)
+  end
 
-  def print_jobs
+  def closest_jobs_by_distance
+    Rescrape::Excel.new.write(Rescrape::Job.order(:distance))
+  end
 
+  def closest_jobs_by_travel_time
+    Rescrape::Excel.new.write(Rescrape::Job.order(:duration))
+  end
+
+  def closest_jobs_by_travel_with_traffic
+    Rescrape::Excel.new.write(Rescrape::Job.order(:duration_in_traffic))
+  end
+
+  def all_companies
+    Rescrape::Excel.new.write(Rescrape::Company.all)
   end
 end
