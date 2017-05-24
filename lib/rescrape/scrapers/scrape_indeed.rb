@@ -2,11 +2,12 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
   attr_accessor :counter
 
   def initialize
-    @counter = 1
+    @page_counter = 1
+    @job_counter = 0
   end
 
   def call(data)
-    if @counter == 1
+    if @page_counter == 1
       doc = Nokogiri::HTML(open(prep_url(data)))
     else
       doc = Nokogiri::HTML(open("https://www.indeed.com/#{data}"))
@@ -58,10 +59,11 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
         details[:url] = ""
       end
       Rescrape::Job.find_or_create_by(details)
+      @job_counter +=1
     end
 
     pages = doc.css(".pagination").css("a")
-    next_element = pages.detect { |p| p.css(".pn").text == (@counter + 1).to_s }
+    next_element = pages.detect { |p| p.css(".pn").text == (@page_counter + 1).to_s }
 
     if next_element.nil?
       next_page = nil
@@ -69,8 +71,12 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
       next_page = next_element["href"]
     end
 
-    @counter += 1
+    @page_counter += 1
     call(next_page) if !next_page.nil?
+  end
+
+  def status_update
+    puts "Successfully added #{@job_counter} jobs to the database!"
   end
 
   private

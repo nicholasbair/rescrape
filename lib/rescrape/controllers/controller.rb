@@ -137,7 +137,9 @@ class Rescrape::Controller
   def find_scraper(search)
     case search.job_site.name
     when "Indeed"
-      Rescrape::ScrapeIndeed.new.call(search)
+      scrape = Rescrape::ScrapeIndeed.new
+      scrape.call(search)
+      scrape.status_update
     end
   end
 
