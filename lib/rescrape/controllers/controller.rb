@@ -1,13 +1,13 @@
 class Rescrape::Controller
   def call
     puts "Welcome to Rescrape".colorize(:light_cyan)
-    set_home if Rescrape::User.first.nil?
+    config_user unless Rescrape::User.first
     start_menu
   end
 
   private
-  # TODO: refactor w/ update_home
-  def set_home
+  def config_user
+    Rescrape::User.destroy_all
     user = Rescrape::User.new
     puts "We will use your home city/state to calculate commute times"
     puts "Please enter your home city"
@@ -15,21 +15,12 @@ class Rescrape::Controller
     puts "Please enter your home state"
     user.state = gets.strip
 
-    # TODO:
-    # Only make API call if !city/state.nil?
-    coordinates = Rescrape::Placer.new({city: user.city, state: user.state}).geocode
-    user.lat = coordinates["lat"]
-    user.lng = coordinates["lng"]
+    if user.city && user.state
+      coordinates = Rescrape::Placer.new({city: user.city, state: user.state}).geocode
+      user.lat = coordinates["lat"]
+      user.lng = coordinates["lng"]
+    end
 
-    user.save
-  end
-
-  def update_home
-    user = Rescrape::User.first
-    puts "Please enter your home city"
-    user.city = gets.strip
-    puts "Please enter your home state"
-    user.state = gets.strip
     user.save
     start_menu
   end
@@ -56,7 +47,7 @@ class Rescrape::Controller
     when 4
       write_excel
     when 5
-      update_home
+      config_user
     else
       start_menu
     end
