@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 12) do
+ActiveRecord::Schema.define(version: 13) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 12) do
     t.string "description"
     t.string "url"
     t.integer "company_id"
-    t.integer "search_id"
     t.float "distance"
     t.string "duration"
     t.string "duration_in_traffic"
