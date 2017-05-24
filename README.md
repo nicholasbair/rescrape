@@ -1,8 +1,11 @@
 # Rescrape
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rescrape`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to Rescrape!
 
-TODO: Delete this and the text above, and describe your gem
+Project goals:
+[x] Refactor [ScrapeIndeed](https://github.com/nicholasbair/scrape_indeed) to include data persistence (SQLite3 + ActiveRecord)
+[x] Allow user to create and save searches
+[x] Gather data on a job's distance from home, commute time, and commute time with traffic (Google Maps API - directions & places)
 
 ## Installation
 
@@ -22,7 +25,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ rescrape
 
 ## Development
 
