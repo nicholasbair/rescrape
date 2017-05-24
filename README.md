@@ -3,29 +3,25 @@
 Welcome to Rescrape!
 
 Project goals:
-[x] Refactor [ScrapeIndeed](https://github.com/nicholasbair/scrape_indeed) to include data persistence (SQLite3 + ActiveRecord)
-[x] Allow user to create and save searches
-[x] Gather data on a job's distance from home, commute time, and commute time with traffic (Google Maps API - directions & places)
+- [x] Refactor [ScrapeIndeed](https://github.com/nicholasbair/scrape_indeed) to include data persistence (SQLite3 + ActiveRecord)
+- [x] Allow user to create and save searches
+- [x] Gather data on a job's distance from home, commute time, and commute time with traffic (Google Maps API - directions & places)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Rescrape is currently not available as a gem, to install:
 
-```ruby
-gem 'rescrape'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rescrape
+1. Fork
+2. Clone
+3. CD into project directory
+4. Create .env file in project root with format of [dotenv mock](dotenv_mock.md)
+4. 'bundle install'
+5. 'bundle'
 
 ## Usage
 
-    $ rescrape
+1. CD into bin
+2. './bin/rescrape'
 
 ## Development
 
