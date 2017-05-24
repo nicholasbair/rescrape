@@ -87,7 +87,7 @@ class Rescrape::Controller
     DELETE_MENU
     print_all_searches
     search_input = gets.strip
-    Rescrape::Search.find(search_input).destroy
+    Rescrape::Search.all[input_to_index(search_input)].destroy
     puts "Successfully deleted search."
     start_menu
   end
