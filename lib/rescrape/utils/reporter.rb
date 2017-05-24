@@ -8,13 +8,11 @@ class Rescrape::Reporter
   # Most common key words
 
   # Reporter aggregates data and passes to Excel
+  # Data == array of ruby objects
   # Excel will need to be refactored to be more generic
+  # Excel will handle formatting of data
 
   def print_jobs
 
-  end
-
-  def get_row_data(job)
-    job.attributes.collect { |k,v| v }
   end
 end
