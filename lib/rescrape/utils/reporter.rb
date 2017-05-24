@@ -1,7 +1,4 @@
 class Rescrape::Reporter
-  # In controller, look at instance methods of Reporter
-  # use that to create menu
-
   def all_jobs
     Rescrape::Excel.new.write(Rescrape::Job.all)
   end

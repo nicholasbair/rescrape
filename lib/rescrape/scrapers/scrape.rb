@@ -1,2 +1,0 @@
-class Rescrape::Scrape
-end

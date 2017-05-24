@@ -32,7 +32,7 @@ class Rescrape::ScrapeIndeed < Rescrape::Scrape
 
         location = job.css(".location").text.strip.split(", ")
         details[:city] = location[0]
-        details[:state] = location[1]
+        details[:state] = location[1].split(" ")[0]
         details[:company] = Rescrape::Company.find_or_create_by(name: job.css(".company").text.strip, city: location[0], state: location[1])
 
         if !details[:company].lat && !details[:company].lng
