@@ -12,10 +12,14 @@ class Rescrape::Mapper
     @origin_lng = Rescape::User.first.lng
   end
 
-  # IDEA: call get directly on HTTParty to avoid namespace issue.
   def get_distance
     result = self.class.get(build_uri)
-    result.parsed_response["routes"][0]["legs"][0]
+    formatted = result.parsed_response["routes"][0]["legs"][0]
+    {
+      distance: formatted["distance"]["value"],
+      duration: formatted["duration"]["value"],
+      duration_in_traffic: formatted["duration_in_traffic"]["value"]
+    }
   end
 
   private

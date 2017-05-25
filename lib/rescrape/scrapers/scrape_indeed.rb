@@ -37,23 +37,23 @@ class Rescrape::ScrapeIndeed
 
         if !details[:company].lat && !details[:company].lng
           begin
-            data = Rescrape::Placer.new({name: details[:company].name, city: location[0], state: location[1]}).find_place
+            place_data = Rescrape::Placer.new({name: details[:company].name, city: location[0], state: location[1]}).find_place
 
-            details[:company].lat = data["lat"]
-            details[:company].lng = data["lng"]
+            details[:company].lat = place_data["lat"]
+            details[:company].lng = place_data["lng"]
           rescue
             nil
           end
         end
 
+
         if details[:company].lat && details[:company].lng
           begin
             map_data = Rescrape::Mapper.new(details[:company].lat, details[:company].lng).get_distance
 
-            # TODO: return value of get_distance should handle this
-            details[:distance] = map_data["distance"]["text"].to_f
-            details[:duration] = map_data["duration"]["text"]
-            details[:duration_in_traffic] = map_data["duration_in_traffic"]["text"]
+            details[:distance] = map_data[:distance]
+            details[:duration] = map_data[:duration]
+            details[:duration_in_traffic] = map_data[:duration_in_traffic]
           rescue
             nil
           end

@@ -11,11 +11,6 @@ class Rescrape::Placer
     data_hash.each { |k, v| self.send("#{k}=", v) }
   end
 
-  def geocode
-    result = self.class.get("#{@@base_uri}#{@@geocode_stub}address=#{@city},+#{@state}&key=#{ENV['GEOCODE_GOOGLE_MAPS_API_KEY']}")
-    parse_results(result)
-  end
-
   def find_place
     result = self.class.get("#{@@base_uri}#{@@places_stub}query=#{@name}+#{@city}+#{@state}&key=#{ENV['PLACES_GOOGLE_MAPS_API_KEY']}")
     parse_results(result)

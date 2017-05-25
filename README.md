@@ -1,6 +1,6 @@
 # Rescrape
 
-Welcome to Rescrape!  A CLI job scraper with data persistence, write to excel, and integration to Google Maps for commute data.
+Welcome to Rescrape!  A CLI job scraper with data persistence, write to excel, and Google Maps integration for commute data.
 
 
 ## Project goals
@@ -30,8 +30,8 @@ Rescrape is currently not available as a gem, to install:
 - All of the Google Maps APIs used in this project allow use for free
   - All have request quotas -> one as low as 1000/day
   - If your searches are broad, you may hit your cap quickly!
-  - One of the main goals of this project is to aggregate commute times based on job results as such,
-  if a search is ran and the Google Maps API is capped, the jobs will not be added to the database
+  - One of the main goals of this project is to aggregate commute times based on job results
+  - If a search is ran and the Google Maps API is capped, the jobs will not be added to the database
   - In the future this will raise an exception, see issue [#40](https://github.com/nicholasbair/rescrape/issues/40)
 
 ## Contributing
