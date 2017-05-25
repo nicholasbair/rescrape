@@ -14,7 +14,6 @@ class Rescrape::ScrapeIndeed
     end
 
     jobs = doc.css("#resultsCol").css(".row")
-
     jobs.each do |job|
       details = {}
 
@@ -45,7 +44,6 @@ class Rescrape::ScrapeIndeed
             nil
           end
         end
-
 
         if details[:company].lat && details[:company].lng
           begin

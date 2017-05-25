@@ -19,10 +19,11 @@ class Rescrape::Controller
       coordinates = Rescrape::Placer.new({city: user.city, state: user.state}).geocode
       user.lat = coordinates["lat"]
       user.lng = coordinates["lng"]
+      user.save
+      start_menu
+    else
+      config_user
     end
-
-    user.save
-    start_menu
   end
 
   def start_menu
@@ -166,17 +167,18 @@ class Rescrape::Controller
 
     input = gets.strip.to_i
 
+    report = Rescrape::Reporter.new
     case input
     when 1
-      Rescrape::Reporter.new.all_jobs
+      report.new.all_jobs
     when 2
-      Rescrape::Reporter.new.all_companies
+      report.new.all_companies
     when 3
-      Rescrape::Reporter.new.closest_jobs_by_distance
+      report.new.closest_jobs_by_distance
     when 4
-      Rescrape::Reporter.new.closest_jobs_by_travel_time
+      report.new.closest_jobs_by_travel_time
     when 5
-      Rescrape::Reporter.new.closest_jobs_by_travel_with_traffic
+      report.new.closest_jobs_by_travel_with_traffic
     when 6
       start_menu
     end
